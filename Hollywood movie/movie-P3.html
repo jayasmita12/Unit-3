@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disney Hotstar</title>
+    <script src="https://kit.fontawesome.com/f62b16b81d.js" crossorigin="anonymous"></script>
+    <style>
+    #maindiv{
+        width:80%;
+        height:400px
+    }
+    body{
+       
+        margin: 0px;
+    }
+    #mainbody{
+        background-image: url("https://wallpapercave.com/wp/wp3285521.jpg");
+        width:100%;
+        height:100vh;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin:0px
+    }
+    
+    h1{
+        color:rgb(246, 235, 217);
+        font-size: 40px;
+    }
+    input[type=text]{
+        padding: 10px;
+        width:50%;
+        font-size: 20px; 
+        border-radius: 7px;  
+    }
+    #btn{
+        margin:10px;
+        padding: 10px 30px;
+        font-size: 20px;
+        border-radius: 7px;
+        background-color: burlywood;
+        font-weight: bold;
+    }
+    #maindiv{
+        display:flex;
+        justify-content: space-around;
+    }
+    p{
+        font-size: 30px;
+        color:yellow
+    }
+    #random1{
+        margin:10px;
+        margin:auto;
+        display:grid;
+        grid-template-columns:repeat(5,1fr);
+        grid-gap:30px
+    }
+    #btn:hover{
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <center>
+        <div id="mainbody">
+        <h1 >Disney Hotstar</h1>
+        <input type="text" placeholder="Enter movie name" style="width:50%;height:30px" id="movies">
+        <div>
+            <button onclick="getmovie()" id="btn">Search</button>
+        </div>
+    <div id="maindiv">
+        <div id="random"></div>
+        <div id="random1"></div>
+    </div>
+    <!-- <span style="font-size: 50px;">&#9733;</span> -->
+    <p>&#9733;&#9733;&#9733;&#9733;&#9733;</p>
+</center>
+</div>
+</body>
+</html>
+
+<script>
+    
+    async function getmovie(){
+        
+        let movies= document.getElementById("movies").value
+        
+        try{
+           
+            let res = await fetch(`http://www.omdbapi.com/?apikey=48a05b91&t=${movies}`);
+            let data = await res.json()
+            // showmoviedetails(data)
+            console.log("data:",data)
+            // displaymovie(data)
+            if(data.Response === "True"){
+               
+                showmoviedetails(data)
+
+         }
+         else{
+             movienotfound()
+         }
+        
+        }
+        catch(error){
+           
+            console.log("this is not write way",error)
+        }
+    }
+   
+   function showmoviedetails(moviedetails){
+       let main_div=document.getElementById("maindiv")
+       main_div.innerHTML=null;
+       let div1=document.createElement("div")
+       
+       let div2=document.createElement("div")
+       div2.style="margin-top:20px"
+          let poster = document.createElement("img")
+          poster.src= moviedetails.Poster ;
+          let title = document.createElement("h1")
+          title.style="font-size:35px;text-decoration:underline"
+          title.innerText=moviedetails.Title
+          let actor =document.createElement("h3")
+          actor.innerText=moviedetails.Actors;
+          actor.style="font-size:30px"
+          let Director =document.createElement("h3")
+          Director.innerText=moviedetails.Director;
+          Director.style="font-size:30px"
+          let DVD =document.createElement("h3")
+          DVD.innerText=moviedetails.DVD;
+          DVD.style="font-size:30px"
+          let Language =document.createElement("h4")
+          Language.innerText=moviedetails.Language;
+          Language.style="font-size:30px"
+         
+        if(moviedetails.imdbRating > 8.5){
+            // let span=document.createElement("span")
+            // span.innerHTML="&#9733";
+            let rating = document.createElement("h3")
+            rating.innerText="BlockBuster:"+moviedetails.imdbRating
+            rating.style="font-size:30px"
+            div1.append(poster)
+            div2.append(title,actor,Director,DVD,Language,rating)
+            main_div.append(div1,div2)
+        }
+        else{
+            let rating = document.createElement("h3")
+            rating.innerText="Ratings:;"+moviedetails.imdbRating
+            rating.style="font-size:30px"
+            div1.append(poster)
+            div2.append(title,actor,Director,DVD,Language,rating)
+            main_div.append(div1,div2)
+        }
+
+   }
+
+
+   function movienotfound(){
+    let main_div=document.getElementById("maindiv")
+    main_div.innerHTML=null;
+    let image=document.createElement("img")
+    image.src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaFXTsBYoRoZk-JhLSeMcNUJ5Vb2CZhkkN2w&usqp=CAU";
+    main_div.append(image)
+   }
+
+let url="http://www.omdbapi.com/?apikey=48a05b91&s=avengers"
+ async  function  getrandommovie(){
+        try{
+            let res = await fetch(url)
+            let data1 =await res.json()
+            // console.log(data1)
+            displaymovie(data1)
+        }
+        catch(err){
+            console.log(err)
+        }
+ }
+getrandommovie()
+function displaymovie(data1){
+    // console.log(data1)
+    data1.Search.map(function(el){
+        console.log(data1.Search)
+        let div=document.getElementById("random1")
+        
+        let div1=document.createElement("div")
+        let image=document.createElement("img")
+        image.src=el.Poster
+        image.style="width:150px;height:200px"
+        div1.append(image)
+    //    div.append(div1).style="display:grid;grid-template-columns:repeat(4,1fr),grid-gap:20px"
+        div.append(div1)
+    })
+}
+</script>
+
+
+

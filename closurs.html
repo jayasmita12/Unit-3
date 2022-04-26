@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    input {
+
+        width: 200px;
+        height: 20px;
+    }
+
+    #movies {
+
+        height: 400px;
+        width: 206px;
+        border: solid 1px black;
+        overflow: scroll;
+    }
+
+    img {
+        width: 50px;
+        height: 50px;
+    }
+</style>
+
+<body>
+    <input type="text" oninput="debounce(displaydata,1000)" id="query">
+    <div id="movies"></div>
+</body>
+
+</html>
+
+<script>
+
+    async function searchmovie() {
+        try {
+            let moviename = document.getElementById("query").value
+
+            let res = await fetch(`https://www.omdbapi.com/?apikey=d806bd70&s=${moviename}`)
+            let data = await res.json()
+            //  console.log(data)
+
+            return (data.Search)
+            //  displaydata(data)
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    async function displaydata() {
+        let data = await searchmovie()
+        if (data === undefined) {
+            return
+        }
+        console.log("data:", data)
+        appenddata(data)
+    }
+
+
+    function appenddata(data) {
+        let movies = document.getElementById("movies")
+        movies.innerHTML = null
+        data.map(function (el) {
+            let div = document.createElement("div")
+            let img = document.createElement("img")
+            img.src = el.Poster
+            let title = document.createElement("p")
+            title.innerText = el.Title
+            div.append(title)
+            movies.append(div)
+        })
+
+    }
+
+    let timerid;
+    function debounce(func, delay) {
+        if (timerid) {
+            clearTimeout(timerid)
+        }
+        timerid = setTimeout(function () {
+            func()
+        }, delay)
+    }
+</script>

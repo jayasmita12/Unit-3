@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McDonald</title>
+</head>
+<style>
+    #main_div {
+        margin: auto;
+        width: 300px;
+        height: 200px
+    }
+
+    #myform {
+        width: 80%;
+        height: 100px;
+        margin: auto;
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-around;
+        padding: 40px;
+    }
+
+    input {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    label {
+        font-size: 25px;
+        font-weight: bold;
+        font-family: 'Times New Roman', Times, serif;
+        color: white;
+        cursor: pointer;
+    }
+
+    #btn {
+        width: 130px;
+        height: 40px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        color: white;
+        background-color: orange;
+        cursor: pointer;
+    }
+
+    body {
+        background-image: url("https://ffwallpaper.com/thumb/mcdonalds/mcdonalds-8.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 100vh;
+        background-position: center;
+        margin-top: 2px;
+    }
+</style>
+
+<body>
+    <form id="myform">
+        <div>
+            <input type="checkbox" id="item1" name="" value="Chicken">
+            <label>Chicken</label><br>
+        </div>
+        <div>
+            <input type="checkbox" id="item2" name="" value="Burger">
+            <label>Burger</label><br>
+        </div>
+        <div>
+            <input type="checkbox" id="item3" name="" value="Pizza">
+            <label>Pizza</label>
+        </div>
+
+        <button onclick="orderingitem(event)" id="btn">Order Food</button>
+    </form>
+
+    <div id="main_div"></div>
+</body>
+
+</html>
+
+<script>
+
+    function orderingitem(event) {
+        event.preventDefault()
+        let item1 = document.getElementById("item1")
+        let item2 = document.getElementById("item2")
+        let item3 = document.getElementById("item3")
+
+        let maindiv = document.getElementById("main_div")
+
+        let shop = "open"
+
+        if (item1.checked == true || item2.checked == true || item3.checked == true) {
+
+            let orderpromise = new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    if (shop === "open") {
+                        if (item1.checked == true) {
+                            maindiv.innerHTML = null
+                            resolve(alert("order success"))
+                            let div = document.createElement("div")
+                            let img = document.createElement("img")
+                            img.setAttribute("src", "https://www.kitchensanctuary.com/wp-content/uploads/2019/08/Korean-Fried-Chicken-square-FS-New-7377.jpg", "https://106fyz3cd4vi2lc2uq1tlyl4-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/Moist-Chicken-Burgers.jpg")
+                            img.style = "width:250px;height:250px"
+                            div.append(img)
+
+
+                            let id = document.createElement("h1")
+                            id.textContent = Math.round(Math.random() * 10 + 1)
+                            id.style = "color:white;font-size:40px;margin-left:50px"
+                            div.append(id, img)
+                            maindiv.append(div)
+                        }
+                        if (item3.checked == true) {
+                            maindiv.innerHTML = null
+                            resolve(alert("order success"))
+                            let div = document.createElement("div")
+                            let img = document.createElement("img")
+                            img.setAttribute("src", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTHeE4Amu7RBqidPpw_Vbs-BcYw-as0zWQIGlkNHn4QCCPgSt4BtEZeD3LEbWx6FVep_0&usqp=CAU")
+                            img.style = "width:250px;height:250px"
+                            div.append(img)
+
+
+                            let id = document.createElement("h1")
+                            id.textContent = Math.round(Math.random() * 10 + 1)
+                            id.style = "color:white;font-size:40px;margin-left:50px"
+                            div.append(id, img)
+                            maindiv.append(div)
+                        }
+                        if (item2.checked == true) {
+                            maindiv.innerHTML = null
+                            resolve(alert("order success"))
+                            let div = document.createElement("div")
+                            let img = document.createElement("img")
+                            img.setAttribute("src", "https://106fyz3cd4vi2lc2uq1tlyl4-wpengine.netdna-ssl.com/wp-content/uploads/2020/09/Moist-Chicken-Burgers.jpg")
+                            img.style = "width:250px;height:250px"
+                            div.append(img)
+
+
+                            let id = document.createElement("h1")
+                            id.textContent = Math.round(Math.random() * 10 + 1)
+                            id.style = "color:white;font-size:40px;margin-left:50px"
+                            div.append(id, img)
+                            maindiv.append(div)
+                        }
+                    }
+                }, 2000)
+            })
+            orderpromise.then(function (res) {
+                console.log(res)
+            })
+                .catch(function (err) {
+                    console.log(err)
+                })
+        }
+
+        else {
+            alert("Please Order as your choice")
+        }
+
+    }
+
+
+</script>
