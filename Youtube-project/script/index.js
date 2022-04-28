@@ -1,6 +1,6 @@
 
 async function getmoviedata(){
-    let key="AIzaSyBOD6TluZlvxDPt8gPSGQVgtchkqYRPKMc";
+    let key="KEY";
     // AIzaSyCuJj4CcvcEjuqcw8u2eOy5G-5cJpYg1V4
     try{
         let searchmovie=document.getElementById("searchmovie").value
